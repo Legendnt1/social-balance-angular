@@ -1,0 +1,50 @@
+<nav class="header">
+  <div class="container">
+    <div class="header-content">
+      <div class="logo">
+        <img src="logo_recortado.png" alt="Logo SocialBalance" />
+      </div>
+
+      <div class="hamburger" (click)="toggleMenu()" aria-label="Abrir menu" role="button" tabindex="0">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <ul class="nav-links" [class.active]="menuOpen">
+        <li class="dropdown">
+          <a class="dropdown-toggle" (click)="toggleDropDown('inicio', $event)">Inicio</a>
+          <ul class="dropdown-menu" [class.active]="dropDown === 'inicio'">
+            <li><a routerLink="/" fragment="hero" (click)="closeMenu()">¿Qué es Social Balance?</a></li>
+            <li><a (click)="closeMenu()">Product</a></li>
+            <li><a routerLink="/" (click)="closeMenu()">Calcula tus puntos</a></li>
+            <li><a routerLink="/" (click)="closeMenu()">¿Cómo funciona el sistema?</a></li>
+            <li><a routerLink="/" (click)="closeMenu()">Recompensas</a></li>
+            <li><a routerLink="/workshops" (click)="closeMenu()">Talleres</a></li>
+            <li><a routerLink="/tips" (click)="closeMenu()">Tip del día</a></li>
+            <li><a routerLink="/previous-tips" (click)="closeMenu()">Archivo de tips</a></li>
+            <li><a routerLink="/subscriptions" (click)="closeMenu()">Suscripciones</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" (click)="toggleDropDown('product', $event)">Product</a>
+          <ul class="dropdown-menu" [class.active]="dropDown === 'product'">
+            <li><a routerLink="/about" (click)="closeMenu()">¿Quiénes somos?</a></li>
+            <li><a routerLink="/" (click)="closeMenu()">Universidades</a></li>
+            <li><a routerLink="/" (click)="closeMenu()">Ranking Universidades</a></li>
+            <li><a routerLink="/" (click)="closeMenu()">Patrocinadores</a></li>
+            <li><a routerLink="/" (click)="closeMenu()">Impacto</a></li>
+            <li><a routerLink="/" (click)="closeMenu()">Testimonios</a></li>
+            <li><a routerLink="/" (click)="closeMenu()">Video destacado</a></li>
+            <li><a routerLink="/faq" (click)="closeMenu()">FAQ</a></li>
+          </ul>
+        </li>
+        <li><a routerLink="/terms" (click)="closeMenu()">Términos y Condiciones</a></li>
+        <li><a routerLink="/contact" (click)="closeMenu()">Contáctanos</a></li>
+      </ul>
+      <div>
+        <button routerLink="/register" class="register-btn" (click)="closeMenu()">Registro</button>
+      </div>
+    </div>
+  </div>
+</nav>

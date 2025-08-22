@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { Contact } from './pages/contact/contact';
 import { Terms } from './pages/terms/terms';
