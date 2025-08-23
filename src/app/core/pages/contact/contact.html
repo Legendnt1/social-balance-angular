@@ -1,76 +1,91 @@
-<section class="contact">
-  <div class="contact-box">
-    <h2>Contáctanos</h2>
-    <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
-      <div class="row">
-        <div class="form-group">
-          <div class="icon-input">
-            <i class="fas fa-user"></i>
-            <input type="text" name="firstName" ngModel placeholder="Nombres" required #firstName="ngModel" />
-          </div> 
-          @if (firstName.invalid && firstName.touched) {
-            <div class="error">El nombre es obligatorio.</div>
-          }
-        </div>
-        <div class="form-group">
-          <div class="icon-input">
-            <i class="fas fa-user"></i>
-            <input type="text" name="lastName" ngModel placeholder="Apellidos" required #lastName="ngModel" />
+<section class="mt-20 bg-primary py-16 px-4 flex justify-center items-center">
+  <div
+    class="relative w-full max-w-4xl bg-primary-light p-8 rounded-lg border border-white box-border overflow-x-hidden text-white"
+  >
+    <h2 class="text-center mb-8 bg-primary-dark p-4 roudned-md text-2xl">
+      Contáctanos
+    </h2>
+    <form
+      (ngSubmit)="onSubmit(contactForm)"
+      #contactForm="ngForm"
+      class="flex flex-col gap-4"
+    >
+      @for (fieldRow of formFields; track $index) {
+      <div class="flex gap-4 flex-wrap">
+        @for (field of fieldRow.row; track field.name) {
+        <div class="flex-1 min-w-[45%] flex flex-col">
+          @if (field.type === 'textarea') {
+          <textarea
+            [name]="field.name"
+            ngModel
+            [rows]="field.rows"
+            [placeholder]="field.placeholder"
+            [required]="field.required"
+            #fieldModel="ngModel"
+            class="p-3 px-4 bg-white rounded-lg border-none text-base resize-y w-full max-w-full box-border text-black/80 placeholder-black/50 focus:text-black focus:placeholder-transparent"
+          ></textarea>
+          @if (fieldModel.invalid && fieldModel.touched) {
+          <div class="text-xs text-red-300 mt-1">
+            El mensaje es obligatorio.
           </div>
-          @if (lastName.invalid && lastName.touched) {
-            <div class="error">El apellido es obligatorio.</div>
-          }
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group">
-          <div class="icon-input">
-            <i class="fas fa-phone"></i>
-            <input type="tel" name="phone" ngModel placeholder="Número de Teléfono" required #phone="ngModel" />
+          } } @else {
+          <div
+            class="flex items-center bg-white text-black rounded-lg p-2 px-4 box-border border-2 border-transparent focus-within:border-primary-dark"
+          >
+            <img [src]="field.svg" alt="" />
+            <input
+              [type]="field.type"
+              [name]="field.name"
+              ngModel
+              [placeholder]="field.placeholder"
+              [required]="field.required"
+              #fieldModel="ngModel"
+              class="border-none outline-none flex-1 text-base w-full max-w-full box-border text-black/80 placeholder-black/50 focus:text-black focus:placeholder-transparent"
+            />
           </div>
-          @if (phone.invalid && phone.touched) {
-            <div class="error">El número es obligatorio.</div>
-          }    
-        </div>
-        <div class="form-group">
-          <div class="icon-input">
-            <i class="fas fa-envelope"></i>
-            <input type="email" name="email" ngModel placeholder="Correo electrónico" required #email="ngModel" />
+          @if (fieldModel.invalid && fieldModel.touched) { @if (field.name ===
+          'email') {
+          <div class="text-xs text-red-300 mt-1">
+            Correo electrónico inválido.
           </div>
-          @if (email.invalid && email.touched) {
-            <div class="error">Correo electrónico inválido.</div>
-          }
+          } @else {
+          <div class="text-xs text-red-300 mt-1">El campo es obligatorio.</div>
+          } } }
         </div>
-      </div>
-      <div class="form-group">
-        <textarea name="message" ngModel rows="5" placeholder="Escriba aquí su mensaje" required #message="ngModel"></textarea>
-        @if (message.invalid && message.touched) {
-          <div class="error">El mensaje es obligatorio.</div>
         }
       </div>
-      <div class="form-group captcha">
-        <label>
-          <i class="fas fa-robot"></i>
-          <input type="checkbox" name="captcha" [(ngModel)]="captchaChecked" required />
-          I'm not a robot
+      }
+
+      <div class="flex flex-col w-full">
+        <label class="flex items-center gap-2">
+          <img src="assets/svg/robot.svg" />
+          <input type="checkbox" name="captcha" [(ngModel)]="captchaChecked" required>
+           No soy un robot
         </label>
         @if (!captchaChecked && formAttempted && !formSubmitted) {
-          <div class="error">Debes confirmar que no eres un robot.</div>
+          <div class="text-xs text-red-300 mt-1">Debes confirmar que no eres un robot.</div>
         }
       </div>
-      <button type="submit" [disabled]="contactForm.invalid || !captchaChecked">Enviar</button>
+
+      <button type="submit" [disabled]="contactForm.invalid || !captchaChecked"
+      class="self-center py-4 px-12 bg-primary text-white font-bold border border-black rounded-lg cursor-pointer transition-colors duration-300 w-full max-w-xs text-base
+      hover:bg-primary-dark disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed"
+      >Enviar</button>
       @if (formSubmitted) {
-        <div class="success-message">¡Mensaje enviado correctamente!</div>
+        <div class="bg-primary-dark text-white text-center p-4 rounded-lg mt-6 mb-6 font-bold animate-fadeIn">¡Mensaje enviado!</div>
       }
-      
     </form>
   </div>
 </section>
 
-
-<section class="divider">
-  <div class="divider-content">
-    <h3>¿Tienes alguna pregunta?</h3>
-    <p>¡Estamos aquí para ayudarte! Completa el formulario y nos pondremos en contacto contigo lo antes posible.</p>
+<section
+  class="w-full bg-primary-light py-16 px-4 flex justify-center items-center text-center text-white"
+>
+  <div class="max-w-[1000px] leading-relaxed">
+    <h3 class="text-3xl mb-4">¿Tienes alguna pregunta?</h3>
+    <p class="text-base mb-2 opacity-80">
+      ¡Estamos aquí para ayudarte! Completa el formulario y nos pondremos en
+      contacto contigo lo antes posible.
+    </p>
   </div>
 </section>
