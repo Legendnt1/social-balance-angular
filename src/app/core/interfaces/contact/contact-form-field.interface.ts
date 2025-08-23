@@ -1,4 +1,4 @@
-export interface FormRow {
+export interface ContactFormRow {
     name: string;
     type: string;
     placeholder: string;
@@ -7,6 +7,6 @@ export interface FormRow {
     required: boolean;
 }
 
-export interface FormField {
-    row: FormRow[];
+export interface ContactFormField {
+    row: ContactFormRow[];
 }

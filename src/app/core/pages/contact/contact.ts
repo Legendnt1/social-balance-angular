@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { CONTACT_FORM_FIELDS } from '../../consts/contact/form-field.const';
 import { CommonModule } from '@angular/common';
+import { CONTACT_FORM_FIELDS } from '../../consts/contact/contact-form-field.const';
+import { ContactFormField } from '../../interfaces/contact/contact-form-field.interface';
 
 @Component({
   selector: 'app-contact',
@@ -9,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './contact.html',
 })
 export class Contact {
-  formFields = CONTACT_FORM_FIELDS;
+  formFields: ContactFormField[] = CONTACT_FORM_FIELDS;
   formSubmitted = false;
   formAttempted = false;
   captchaChecked = false;

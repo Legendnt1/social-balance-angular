@@ -1,6 +1,6 @@
-import { FormField } from "../../interfaces/contact/form-field.interface";
+import { ContactFormField } from "../../interfaces/contact/contact-form-field.interface";
 
-export const CONTACT_FORM_FIELDS: FormField[] = [
+export const CONTACT_FORM_FIELDS: ContactFormField[] = [
   {
     row: [
       {
