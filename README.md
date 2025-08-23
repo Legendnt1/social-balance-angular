@@ -1,162 +1,41 @@
-# SocialBalance - Proyecto en Angular
+# 🌟 Social Balance
 
-**Angular** es un framework de desarrollo web basado en TypeScript creado por Google. Está diseñado para crear aplicaciones de una sola página (SPA) de manera eficiente y escalable. Angular se basa en componentes reutilizables, inyección de dependencias, enlace de datos bidireccional, y un potente sistema de enrutamiento.
+¡Bienvenido a **Social Balance**! Este es un proyecto individual estudiantil diseñado para aprender y practicar Angular mientras se construye una aplicación web moderna y funcional. 🚀
 
-Este proyecto está construido usando **Angular versión 20**. A continuación, se describe la estructura general del proyecto, cómo se organizan los componentes, cómo se manejan los estilos, y las funcionalidades principales con TypeScript.
+## 📝 Descripción
+Social Balance es una aplicación interactiva que combina diferentes funcionalidades para ofrecer una experiencia educativa y entretenida. Incluye páginas como:
+- 🏠 Inicio
+- 📞 Contacto
+- 📝 Registro
+- 📜 Términos
+- 🎁 Recompensas
+- 💡 Consejos
+- 🛠️ Talleres
 
----
+El diseño y la estructura del proyecto están pensados para simular un entorno de desarrollo profesional.
 
-## 📁 Estructura del Proyecto
+## 🛠️ Tecnologías Utilizadas
+- **⚡ Angular**: Framework principal para el desarrollo de la aplicación.
+- **🎨 TailwindCSS**: Framework de estilos para un diseño moderno y responsivo.
+- **🌐 Netlify**: Plataforma utilizada para el despliegue.
+- **💻 HTML, CSS y TypeScript**: Tecnologías base para la construcción de la interfaz y la lógica de la aplicación.
 
-```
-src/
-├── app/
-│   ├── components/         # Componentes reutilizables como header y footer
-│   │   ├── header/
-│   │   └── footer/
-│   ├── pages/              # Páginas principales
-│   │   ├── home/
-│   │   ├── about/
-│   │   ├── contact/
-│   │   ├── register/
-│   │   └── terms/
-│   ├── app.config.ts       # Configuración de rutas
-│   └── app.component.ts    # Componente raíz
-├── assets/                 # Imágenes, íconos, fuentes
-└── styles.scss             # Estilos globales
-```
+## 🌍 Despliegue
+[🔗 Social Balance en Netlify](https://social-balance.netlify.app)
 
----
+## 🗂️ Estructura del Proyecto
+El proyecto sigue una estructura modular organizada en carpetas para facilitar el mantenimiento y la escalabilidad. Algunas de las principales carpetas incluyen:
+- 📂 `src/app/core`: Contiene componentes, constantes, interfaces y páginas principales.
+- 📂 `src/app/shared`: Incluye componentes y recursos compartidos entre diferentes partes de la aplicación.
+- 📂 `public/assets`: Almacena recursos estáticos como imágenes, fuentes, videos y SVGs.
 
-## 🧱 Componentes
-
-Los componentes están divididos en dos categorías:
-
-- **`components/`**: contiene elementos reutilizables como el `header` y `footer`.
-- **`pages/`**: contiene las vistas completas como `home`, `about`, `contact`, etc.
-
-Cada componente tiene su propia carpeta con los archivos:
-
-- `.ts`: lógica del componente
-- `.html`: estructura de la vista
-- `.scss`: estilos específicos del componente
+## 🎯 Propósito
+Este proyecto tiene como objetivo principal el aprendizaje y la práctica de Angular, incluyendo conceptos como:
+- 🧩 Creación de componentes y servicios.
+- 🔀 Manejo de rutas y navegación.
+- 📐 Uso de interfaces y constantes.
+- 🎨 Implementación de estilos con TailwindCSS y diseño responsivo.
 
 ---
 
-## 🎨 Estilos CSS
-
-Los estilos se manejan de forma modular:
-
-- `styles.css` define variables y estilos globales (colores, fuentes, reset).
-- Cada componente tiene su propio archivo `.css` con estilo encapsulado.
-- Se utiliza `@media` queries para diseño **responsive**.
-
-Paleta de colores utilizada:
-
-- `#2B7A78` (verde turquesa): fondo principal
-- `#1C4C4C` (verde profundo): contrastes y bloques secundarios
-- `#3E7C74` (verde petróleo): detalles elegantes
-- `#FFFFFF` (blanco): textos sobre fondos oscuros
-- `#121721` (negro): textos sobre fondos claros
-
----
-
-## 🔀 Enrutamiento (Routing)
-
-Angular 20 usa `app.routes.ts` para definir rutas. Ejemplo:
-
-```ts
-import { Routes } from '@angular/router';
-import { Home } from './pages/home/home';
-import { Contact } from './pages/contact/contact';
-import { Terms } from './pages/terms/terms';
-import { Register } from './pages/register/register';
-import { About } from './pages/about/about';
-
-export const routes: Routes = [
-    { path: '', component: Home },
-    { path: 'about', component: About },
-    { path: 'contact', component: Contact },
-    { path: 'terms', component: Terms },
-    { path: 'register', component: Register },
-    { path: '**', redirectTo: '' } // Redireccionar a la página de inicio para rutas no encontradas
-];
-```
-
-El archivo `app.config.ts` es donde se importa y configura el enrutamiento de manera centralizada.
-
----
-
-## 📩 Formularios y Validaciones
-
-Para formularios, se utiliza `FormsModule` con `[(ngModel)]` para el two-way binding. Se aplican validaciones en tiempo real:
-
-### Ejemplo de HTML:
-```html
-<div class="form-group">
-  <input type="text" name="username" ngModel placeholder="Nombre de Usuario" required #username="ngModel" />
-    @if (username.invalid && username.touched) {
-      <div class="error">Campo obligatorio</div>
-    }
-</div>
-```
-
-### Lógica en TypeScript:
-```ts
-formSubmitted = false;
-formAttempted = false;
-captchaChecked = false;
-
-onSubmit(form: NgForm) {
-  this.formAttempted = true;
-
-  if (form.valid && this.captchaChecked) {
-    this.formSubmitted = true;
-
-    form.resetForm();
-    this.captchaChecked = false;
-
-    // Ocultar el mensaje después de unos segundos
-    setTimeout(() => {
-      this.formSubmitted = false;
-      this.formAttempted = false;
-    }, 5000);
-  }
-}
-```
-
----
-
-## 🚀 Despliegue con GitHub y Netlify
-
-### Paso 1: Subir a GitHub
-1. Inicializa un repositorio:
-```bash
-git init
-git add .
-git commit -m "Primer commit"
-git remote add origin https://github.com/usuario/repositorio.git
-git push -u origin main
-```
-
-### Paso 2: Construir el proyecto
-```bash
-ng build --configuration production
-```
-Esto genera los archivos en:
-```
-dist/social-balance/browser/
-```
-
-### Paso 3: Conectar Netlify
-1. Entra a [Netlify](https://www.netlify.com/)
-2. Crea un nuevo sitio con la opción **Importar desde Git**
-3. Elige GitHub y selecciona el repositorio
-4. Configura:
-   - **Framework**: Angular
-   - **Build command**: `ng build --configuration production`
-   - **Publish directory**: `dist/social-balance/browser`
-
-Netlify construirá y desplegará tu proyecto automáticamente.
-
-Desarrollado por el: **Grupo 5**
+✨ ¡Gracias por visitar este proyecto!
