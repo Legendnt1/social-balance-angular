@@ -1,50 +1,140 @@
-<nav class="header">
-  <div class="container">
-    <div class="header-content">
-      <div class="logo">
-        <img src="favicon.ico" alt="Logo SocialBalance" />
-      </div>
+<header class="fixed left-0 top-0 z-50 w-full bg-primary-dark">
+  <nav class="mx-auto max-w-[1200px] px-8">
+    <div class="my-2 flex h-20 items-center justify-between">
+      <!-- Logo -->
+      <a routerLink="/" class="inline-flex items-center gap-2">
+        <img
+          src="assets/images/core/favicon.ico"
+          alt="Logo de Social Balance"
+          class="h-12 w-auto rounded-md"
+        />
+      </a>
 
-      <div class="hamburger" (click)="toggleMenu()" aria-label="Abrir menu" role="button" tabindex="0">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <!-- Hamburguesa (responsive movil) -->
+      <button
+        type="button"
+        class="relative z-[60] flex flex-col gap-1.5 md:hidden cursor-pointer"
+        (click)="toggleMenu()"
+        aria-label="Abrir menú"
+        [attr.aria-expanded]="menuOpen()"
+      >
+        <span class="block h-[3px] w-6 rounded bg-white"></span>
+        <span class="block h-[3px] w-6 rounded bg-white"></span>
+        <span class="block h-[3px] w-6 rounded bg-white"></span>
+      </button>
 
-      <ul class="nav-links" [class.active]="menuOpen">
-        <li class="dropdown">
-          <a class="dropdown-toggle" (click)="toggleDropDown('inicio', $event)">Inicio</a>
-          <ul class="dropdown-menu" [class.active]="dropDown === 'inicio'">
-            <li><a routerLink="/" fragment="hero" (click)="closeMenu()">¿Qué es Social Balance?</a></li>
-            <li><a (click)="closeMenu()">Product</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Calcula tus puntos</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">¿Cómo funciona el sistema?</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Recompensas</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Talleres</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Tip del día</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Archivo de tips</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Suscripciones</a></li>
+      <!-- Navegación desktop-->
+      <ul class="hidden items-center gap-6 md:flex">
+        @for (menu of headerMenus; track menu.page) {
+        <li class="group relative mt-3">
+          @if (menu.links.length) {
+          <button
+            type="button"
+            class="font-semibold text-white transition-colors hover:text-primary-light focus:outline-none"
+            aria-haspopup="menu"
+          >
+            {{ menu.page }}
+          </button>
+
+          <!-- Submenú: hover en desktop -->
+          <ul
+            class="absolute left-1/2 top-full z-50 mt-3 hidden min-w-56 -translate-x-1/2 -translate-y-3 rounded-lg bg-primary-dark p-2 shadow-lg group-hover:block"
+          >
+            @for (link of menu.links; track link.href) {
+            <li>
+              <a
+                class="block rounded-md px-4 py-3 text-sm text-white transition-colors hover:text-primary-light"
+                [routerLink]="menu.router"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+            }
           </ul>
+          } @else {
+          <a
+            class="block px-2 py-2 font-semibold text-white"
+            [routerLink]="menu.router"
+          >
+            {{ menu.page }}
+          </a>
+          }
         </li>
-        <li class="dropdown">
-          <a class="dropdown-toggle" (click)="toggleDropDown('product', $event)">Product</a>
-          <ul class="dropdown-menu" [class.active]="dropDown === 'product'">
-            <li><a routerLink="/" (click)="closeMenu()">¿Quiénes somos?</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Universidades</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Ranking Universidades</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Patrocinadores</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Impacto</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Testimonios</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Video destacado</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">FAQ</a></li>
-          </ul>
-        </li>
-        <li><a routerLink="/terms" (click)="closeMenu()">Términos y Condiciones</a></li>
-        <li><a routerLink="/contact" (click)="closeMenu()">Contáctanos</a></li>
+        }
       </ul>
-      <div>
-        <button routerLink="/register" class="register-btn" (click)="closeMenu()">Registro</button>
+      <div class="hidden md:block">
+        <a
+          routerLink="/register"
+          class="inline-flex items-center rounded-lg border-2 border-black bg-white px-4 py-2 font-semibold text-black transition-colors hover:bg-black hover:text-white"
+        >
+          Registro
+        </a>
       </div>
     </div>
-  </div>
-</nav>
+
+    <!-- Panel móvil -->
+    @if (menuOpen()) {
+    <div class="border-t border-white/10 md:hidden">
+      <ul class="flex flex-col gap-1 p-4">
+        @for (menu of headerMenus; track menu.page) {
+        <li>
+          @if (menu.links.length) {
+          <button
+            type="button"
+            class="flex w-full items-center justify-between px-2 py-2 text-left font-semibold text-white"
+            (click)="toggleDropdown(menu.page)"
+          >
+            {{ menu.page }}
+            <svg
+              class="h-4 w-4 transition-transform"
+              [class.rotate-180]="openDropdown() === menu.page"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+          @if(openDropdown() === menu.page) {+
+          <ul class="mt-1 space-y-1 rounded-md bg-primary-dark/90 p-1">
+            @for (link of menu.links; track link.href) {
+            <li>
+              <a
+                class="block rounded-md px-4 py-2 text-sm text-white transition-colors hover:text-primary-light"
+                [routerLink]="menu.router"
+                (click)="closeAll()"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+            }
+          </ul>
+          } } @else {
+          <a
+            class="block px-2 py-2 font-semibold text-white"
+            [routerLink]="menu.router"
+            (click)="closeAll()"
+          >
+            {{menu.page}}
+          </a>
+          }
+        </li>
+        }
+
+        <li class="pt-2">
+          <a
+            routerLink="/register"
+            class="inline-flex items-center rounded-lg border-2 border-black bg-white px-4 py-2 font-semibold text-black transition-colors hover:bg-black hover:text-white"
+          >
+            Registro
+          </a>
+        </li>
+      </ul>
+    </div>
+    }
+  </nav>
+</header>

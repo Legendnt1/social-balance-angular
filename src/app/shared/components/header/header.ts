@@ -1,44 +1,32 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HeaderMenu } from '../../interfaces/header-menu.interface';
+import { HEADER_MENUS } from '../../consts/header-menu.const';
 
 @Component({
   selector: 'app-header',
   imports: [CommonModule,RouterModule],
   templateUrl: './header.html',
-  styleUrl: './header.css'
 })
 export class Header {
-  menuOpen = false;
-  dropDown: string | null = null;
+  menuOpen = signal(false);
+  openDropdown = signal<string | null>(null);
 
-  constructor(private el: ElementRef) {}
+  constructor(private element: ElementRef<HTMLElement>) {}
 
-  toggleDropDown(id: string, event?:  Event) {
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  headerMenus: HeaderMenu[] = HEADER_MENUS;
 
-    this.dropDown = this.dropDown === id ? null : id;
+  toggleMenu(): void {
+    this.menuOpen.update((v) => !v);
   }
 
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
+  toggleDropdown(label: string): void {
+    this.openDropdown.update((cur) => (cur === label ? null : label));
   }
 
-  closeMenu() {
-    this.menuOpen = false;
-    this.dropDown = null;
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: Event) {
-    const target = event.target as HTMLElement;
-    // if click happened outside this component, close menus
-    if (!this.el.nativeElement.contains(target)) {
-      this.dropDown = null;
-      this.menuOpen = false;
-    }
+  closeAll(): void {
+    this.menuOpen.set(false);
+    this.openDropdown.set(null);
   }
 }
