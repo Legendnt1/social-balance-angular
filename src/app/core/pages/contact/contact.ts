@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { CONTACT_FORM_FIELDS } from '../../consts/contact/contact-form-field.const';
+import { ContactFormField } from '../../interfaces/contact/contact-form-field.interface';
 
 @Component({
   selector: 'app-contact',
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './contact.html',
-  styleUrl: './contact.css'
 })
 export class Contact {
+  formFields: ContactFormField[] = CONTACT_FORM_FIELDS;
   formSubmitted = false;
   formAttempted = false;
   captchaChecked = false;

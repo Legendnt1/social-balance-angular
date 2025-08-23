@@ -1,24 +1,31 @@
-<section class="about">
-  <div class="container">
-    <div class="section">
-      <h2>¿Quiénes somos?</h2>
-      <p>
+<section class="bg-primary text-white py-28 px-4">
+  <div class="container max-w-screen-xl mx-auto px-4">
+    <div class="bg-primary-light border border-white rounded-lg p-6 mb-8 text-center">
+      <h2 class="text-4xl font-semibold mb-4">¿Quiénes somos?</h2>
+      <p class="text-base leading-relaxed">
         Social Balance es una iniciativa dedicada a mejorar el bienestar digital de estudiantes universitarios. Buscamos equilibrar el uso de la tecnología, ofreciendo herramientas efectivas para gestionar el tiempo en redes sociales sin afectar la productividad ni el bienestar emocional.
       </p>
     </div>
 
-    <div class="section">
-      <h2>Nuestra misión</h2>
-      <p>
+    <div class="bg-primary-light border border-white rounded-lg p-6 mb-8 text-center">
+      <h2 class="text-3xl font-semibold mb-4">Nuestra misión</h2>
+      <p class="text-base leading-relaxed">
         Ayudar a los estudiantes a recuperar el control de su vida digital, brindando soluciones innovadoras que les permitan optimizar su tiempo, reducir distracciones y fortalecer su bienestar mental y social.
       </p>
     </div>
 
-    <div class="equipo">
-      <div class="miembro" *ngFor="let integrante of integrantes">
-        <img [src]="integrante.imagen" alt="Foto de {{integrante.nombre}}" />
-        <p><strong>{{integrante.nombre}}</strong><br />{{integrante.descripcion}}</p>
-      </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+        @for (member of teamMembers; track member.name) {
+          <div class="bg-primary-light rounded-2xl p-4 w-full max-w-sm text-center border-2 border-white shadow-md">
+            <img [src]="member.image" [alt]="'Foto de ' + member.name"
+            class="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+            >
+            <p class="text-white text-sm">{{member.name}}<br>{{member.description}}</p>
+          </div>
+        } @empty {
+          <p>No hay miembros de equipo disponibles.</p>
+        }
+      
     </div>
   </div>
 </section>

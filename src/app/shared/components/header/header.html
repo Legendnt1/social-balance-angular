@@ -1,50 +1,44 @@
-<nav class="header">
-  <div class="container">
-    <div class="header-content">
-      <div class="logo">
-        <img src="favicon.ico" alt="Logo SocialBalance" />
-      </div>
+<header class="fixed left-0 top-0 z-50 w-full bg-primary-dark">
+  <nav class="mx-auto max-w-[1200px] px-8">
+    <div class="my-2 flex h-20 items-center justify-between">
+      <!-- Logo -->
+      <a routerLink="/" class="inline-flex items-center gap-2">
+        <img
+          src="assets/images/core/favicon.ico"
+          alt="Logo de Social Balance"
+          class="h-12 w-auto rounded-md"
+        />
+      </a>
 
-      <div class="hamburger" (click)="toggleMenu()" aria-label="Abrir menu" role="button" tabindex="0">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <!-- Hamburguesa (responsive movil) -->
+      <button
+        type="button"
+        class="relative z-[60] flex flex-col gap-1.5 md:hidden cursor-pointer"
+        (click)="toggleMenu()"
+        aria-label="Abrir menú"
+        [attr.aria-expanded]="menuOpen()"
+      >
+        <span class="block h-[3px] w-6 rounded bg-white"></span>
+        <span class="block h-[3px] w-6 rounded bg-white"></span>
+        <span class="block h-[3px] w-6 rounded bg-white"></span>
+      </button>
 
-      <ul class="nav-links" [class.active]="menuOpen">
-        <li class="dropdown">
-          <a class="dropdown-toggle" (click)="toggleDropDown('inicio', $event)">Inicio</a>
-          <ul class="dropdown-menu" [class.active]="dropDown === 'inicio'">
-            <li><a routerLink="/" fragment="hero" (click)="closeMenu()">¿Qué es Social Balance?</a></li>
-            <li><a (click)="closeMenu()">Product</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Calcula tus puntos</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">¿Cómo funciona el sistema?</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Recompensas</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Talleres</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Tip del día</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Archivo de tips</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Suscripciones</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a class="dropdown-toggle" (click)="toggleDropDown('product', $event)">Product</a>
-          <ul class="dropdown-menu" [class.active]="dropDown === 'product'">
-            <li><a routerLink="/" (click)="closeMenu()">¿Quiénes somos?</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Universidades</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Ranking Universidades</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Patrocinadores</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Impacto</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Testimonios</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">Video destacado</a></li>
-            <li><a routerLink="/" (click)="closeMenu()">FAQ</a></li>
-          </ul>
-        </li>
-        <li><a routerLink="/terms" (click)="closeMenu()">Términos y Condiciones</a></li>
-        <li><a routerLink="/contact" (click)="closeMenu()">Contáctanos</a></li>
-      </ul>
-      <div>
-        <button routerLink="/register" class="register-btn" (click)="closeMenu()">Registro</button>
+      <!-- Navegación desktop-->
+      <header-desktop [headerMenus]="headerMenus" />
+
+      <div class="hidden md:block">
+        <a
+          routerLink="/register"
+          class="inline-flex items-center rounded-lg border-2 border-black bg-white px-4 py-2 font-semibold text-black transition-colors hover:bg-black hover:text-white"
+        >
+          Registro
+        </a>
       </div>
     </div>
-  </div>
-</nav>
+
+    <!-- Panel móvil -->
+    @if (menuOpen()) {
+      <header-mobile [headerMenus]="headerMenus" />
+    }
+  </nav>
+</header>

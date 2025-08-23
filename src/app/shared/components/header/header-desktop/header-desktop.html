@@ -1,0 +1,38 @@
+<ul class="hidden items-center gap-6 md:flex">
+  @for (menu of headerMenus(); track menu.page) {
+  <li class="group relative mt-3">
+    @if (menu.links.length) {
+    <button
+      type="button"
+      class="font-semibold text-white transition-colors hover:text-primary-light focus:outline-none"
+      aria-haspopup="menu"
+    >
+      {{ menu.page }}
+    </button>
+
+    <!-- Submenú: hover en desktop -->
+    <ul
+      class="absolute left-1/2 top-full z-50 mt-3 hidden min-w-56 -translate-x-1/2 -translate-y-3 rounded-lg bg-primary-dark p-2 shadow-lg group-hover:block"
+    >
+      @for (link of menu.links; track link.href) {
+      <li>
+        <a
+          class="block rounded-md px-4 py-3 text-sm text-white transition-colors hover:text-primary-light"
+          [routerLink]="menu.router"
+        >
+          {{ link.label }}
+        </a>
+      </li>
+      }
+    </ul>
+    } @else {
+    <a
+      class="block px-2 py-2 font-semibold text-white"
+      [routerLink]="menu.router"
+    >
+      {{ menu.page }}
+    </a>
+    }
+  </li>
+  }
+</ul>

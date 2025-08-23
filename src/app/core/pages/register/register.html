@@ -1,49 +1,41 @@
-<section class="register">
-  <div class="register-box">
-    <div class="register-grid">
-      <div class="register-image">
-        <h1>¡Intenta Social Balance!</h1>
-        <img src="register.webp" alt="Registro" />
+<section class="mt-24 bg-primary py-24 flex justify-center items-center">
+  <div class="rounded-md p-8 max-w-6xl w-full text-white">
+    <div class="flex flex-wrap gap-12">
+      <div class="flex-1 min-w-[45%] flex flex-col text-center">
+        <h1 class="text-3xl mb-4">¡Intenta Social Balance!</h1>
+        <img src="/assets/images/core/register.webp" alt="Imagen de Registro" class="w-full rounded-xl">
       </div>
-      <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm" class="register-form">
-        <h2>Registro</h2>
-        <div class="form-group">
-          <input type="text" name="username" ngModel placeholder="Nombre de Usuario" required #username="ngModel" />
-          @if (username.invalid && username.touched) {
-            <div class="error">Campo obligatorio</div>
+      <form (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm" 
+      class="flex-1 min-w-[45%] bg-primary-light p-8 rounded-lg flex flex-col gap-5 border border-white">
+      <h2 class="text-xl text-center mb-4">Registro</h2>
+
+      @for (field of formFields; track field.name) {
+        <div class="flex flex-col">
+          <input [type]="field.type" [name]="field.name" ngModel [placeholder]="field.placeholder" 
+          [required]="field.required"
+          #fieldModel="ngModel"
+          class="bg-white p-3 rounded-md border-none text-base outline-none text-black/80 placeholder-black/50 focus:text-black focus:placeholder-transparent"
+          />
+          @if (fieldModel.invalid && fieldModel.touched) {
+            <div class="text-xs text-red-300 mt-1">
+              {{ field.invalidMessage || 'Campo obligatorio' }}
+            </div>
           }
         </div>
-        <div class="form-group">
-          <input type="text" name="fullname" ngModel placeholder="Nombre Completo" required #fullname="ngModel" />
-          @if (fullname.invalid && fullname.touched) {
-            <div class="error">Campo obligatorio</div>
-          }
-        </div>
-        <div class="form-group">
-          <input type="email" name="email" ngModel placeholder="Correo Electrónico" required #email="ngModel" />
-          @if (email.invalid && email.touched) {
-            <div class="error">Correo inválido</div>
-          }
-        </div>
-        <div class="form-group">
-          <input type="tel" name="phone" ngModel placeholder="Número de Teléfono" required #phone="ngModel" />
-          @if (phone.invalid && phone.touched) {
-            <div class="error">Campo obligatorio</div>
-          }
-        </div>
-        <div class="form-group">
-          <input type="text" name="university" ngModel placeholder="Universidad" required #university="ngModel" />
-          @if (university.invalid && university.touched) {
-            <div class="error">Campo obligatorio</div>
-          }
-        </div>
-        <div class="form-group checkbox">
-          <label>
-            <input type="checkbox" name="terms" ngModel required />
-            He leído y acepto los Términos y Condiciones.
-          </label>
-        </div>
-        <button type="submit" [disabled]="registerForm.invalid">Crear cuenta</button>
+      }
+      <div class="flex flex-col w-full mt-2">
+        <label class="flex items-center gap-2 text-sm">
+          <input type="checkbox" name="terms" ngModel required />
+          He leído y acepto los <a routerLink="/terms" class="underline">Términos y Condiciones.</a>
+        </label>
+      </div>
+      <button type="submit" [disabled]="registerForm.invalid"
+      class="self-center py-3 px-8 bg-primary text-white font-bold border border-white rounded-lg
+      cursor-pointer transition-colors duration-300 w-full max-w-xs text-base
+      hover:bg-primary-dark disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed"
+      >
+      Crear cuenta
+      </button>
       </form>
     </div>
   </div>
