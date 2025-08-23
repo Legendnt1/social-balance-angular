@@ -1,33 +1,23 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { RegisterFormField } from '../../interfaces/register/register-form-field.interface';
+import { REGISTER_FORM_FIELDS } from '../../consts/register/register-form-field.constant';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './register.html',
-  styleUrl: './register.css'
 })
 export class Register {
+  readonly formFields: RegisterFormField[] = REGISTER_FORM_FIELDS;
   formSubmitted = false;
 
   onSubmit(form: NgForm): void {
     if (form.valid) {
-      console.log('Datos del formulario:', form.value);
       this.formSubmitted = true;
       form.resetForm();
-    } else {
-      this.scrollToFirstInvalidControl(form);
     }
   }
 
-  private scrollToFirstInvalidControl(form: NgForm): void {
-    const invalidControlName = Object.keys(form.controls).find(key => form.controls[key].invalid);
-    if (invalidControlName) {
-      const element = document.querySelector(`[name="${invalidControlName}"]`);
-      if (element) {
-        (element as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
-        (element as HTMLElement).focus();
-      }
-    }
-  }
 }
